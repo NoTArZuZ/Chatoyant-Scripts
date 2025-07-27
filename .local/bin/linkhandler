@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+url="$1"
+
+[ -z "$1" ] && url="$(xclip -o)" 
+
+case "$url" in
+  *://*.png*|*://*.jpg*|*://*.jpeg*|*://*.gif*) nsxiv-url "$url" ;;
+  *://*.mp4*|*://*.mov*|*://*.mp3*|*://*.wav*|*://*.ogg*|*://*.m4a*|*://*.flac*|*://v.redd.it/*) mpv "$url" ;;
+  *://*.*) cromite "$url" ;;
+  *) echo "Don't know what to do with this url"; exit 1 ;;
+esac
