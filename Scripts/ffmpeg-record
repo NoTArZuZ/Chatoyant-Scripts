@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 # Dependencies: ffmpeg, pactl
+# It is very handy to record separate microphone track
 
 set -euo pipefail
 
 . ~/Scripts/script-vars
 
-# It is very handy to record separate microphone track
+# USER DEFINED VARIABLES
+shutup=true # Suppress startup notifications
 
 # Vars
 scrres=$(xrandr | grep "current" | awk '{print $8 $9 $10}' | sed 's/.\{1\}$//')
@@ -51,7 +53,7 @@ case $mainmethod in
     else
       recvidsnd
     fi
-    notify-send -i info "Recording Tool" "Started video recording..."
+    [ $shutup = false ] && notify-send -i info "Recording Tool" "Started video recording..."
   ;;
   Record\ Audio)
     if [ "$recopts" == "Mic and Desktop" ]; then
@@ -60,7 +62,7 @@ case $mainmethod in
     else
       recsnd
     fi
-    notify-send -i info "Recording Tool" "Started audio recording..."
+    [ $shutup = false ] && notify-send -i info "Recording Tool" "Started audio recording..."
   ;;
 esac
 }
